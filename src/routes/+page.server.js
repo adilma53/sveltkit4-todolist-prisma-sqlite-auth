@@ -34,7 +34,7 @@ export const actions = {
 			return fail(400, { message: 'Invalid todo id' });
 		}
 
-		const { completed, text } = Object.fromEntries(await request.formData());
+		const { text } = Object.fromEntries(await request.formData());
 
 		try {
 			await prisma.todo.update({
@@ -42,7 +42,6 @@ export const actions = {
 					id: Number(id)
 				},
 				data: {
-					completed: completed,
 					text
 				}
 			});
@@ -70,6 +69,41 @@ export const actions = {
 		} catch (error) {
 			console.error('error ->', error);
 			return fail(500, { message: 'Could not create the todo.' });
+		}
+
+		return {
+			status: 200
+		};
+	},
+
+	checkTodo: async ({ request, url }) => {
+		const id = await url.searchParams.get('id');
+		if (!id) {
+			return fail(400, { message: 'Invalid todo id' });
+		}
+
+		try {
+			const currentTodo = await prisma.todo.findUnique({
+				where: {
+					id: Number(id)
+				}
+			});
+
+			if (!currentTodo) {
+				return fail(404, { message: 'Todo not found' });
+			}
+
+			await prisma.todo.update({
+				where: {
+					id: Number(id)
+				},
+				data: {
+					completed: !currentTodo.completed
+				}
+			});
+		} catch (error) {
+			console.error('error ->', error);
+			return fail(500, { message: 'Could not update the todo.' });
 		}
 
 		return {

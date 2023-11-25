@@ -47,14 +47,6 @@
 			localStorage.setItem('todos', JSON.stringify(todos));
 		}
 	}
-
-	async function check(todo) {
-		const prisma = new PrismaClient();
-		await prisma.todo.update({
-			where: { id: todo.id },
-			data: { completed: true }
-		});
-	}
 </script>
 
 <div
@@ -97,7 +89,10 @@
 						: ''}"
 				/>
 
-				<button type="submit">submit</button>
+				<form class="p-1 rounded-lg border-2 mr-4" action="?/checkTodo&id={todo.id}" method="POST">
+					<input type="hidden" name="completed" />
+					<button type="submit">{todo.completed ? 'Undone' : 'Done'}</button>
+				</form>
 
 				<form action="?/deleteTodo&id={todo.id}" method="POST">
 					<button type="submit">x</button>
