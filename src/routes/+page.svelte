@@ -90,7 +90,7 @@
 				/>
 
 				<form class="p-1 rounded-lg border-2 mr-4" action="?/checkTodo&id={todo.id}" method="POST">
-					<input type="hidden" name="completed" />
+					<input type="hidden" />
 					<button type="submit">{todo.completed ? 'Undone' : 'Done'}</button>
 				</form>
 
