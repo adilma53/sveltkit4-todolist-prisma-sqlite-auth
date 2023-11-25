@@ -33,7 +33,6 @@
 	"dependencies": {
 		"@prisma/client": "^5.6.0",
 		"sqlite3": "^5.1.6",
-		"@picocss/pico": "^1.5.7",
-		"lucia-auth": "^1.7.0"
+		"@picocss/pico": "^1.5.7"
 	}
 }
