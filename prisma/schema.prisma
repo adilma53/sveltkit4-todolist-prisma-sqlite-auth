@@ -22,39 +22,21 @@ model Todo {
 
 
 
+model User {
+  id            String @id @default(uuid())
+  username      String @unique
+  passwordHash  String
+  userAuthToken String @unique
 
-// model AuthUser {
-//     id       String    @id @unique
-//     name     String
-//     username String    @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//     todos Todo[]
+  role   Roles @relation(fields: [roleId], references: [id])
+  roleId Int
+}
 
-//     auth_session  AuthSession[]
-//     auth_key      AuthKey[]
-
-//     @@map("auth_user")
-// }
-
-// model AuthSession {
-//     id             String @id @unique
-//     user_id        String
-//     active_expires BigInt
-//     idle_expires   BigInt
-//     auth_user           AuthUser   @relation(references: [id], fields: [user_id], onDelete: Cascade)
-
-//     @@index([user_id])
-//     @@map("auth_session")
-// }
-
-// model AuthKey {
-//     id              String  @id @unique
-//     hashed_password String?
-//     user_id         String
-//     primary_key     Boolean
-//     expires         BigInt?
-//     auth_user            AuthUser    @relation(references: [id], fields: [user_id], onDelete: Cascade)
-
-//     @@index([user_id])
-//     @@map("auth_key")
-// }
+model Roles {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  User User[]
+}
