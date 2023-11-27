@@ -45,8 +45,11 @@ export const actions = {
 		const username = data.get('username'); // Assuming 'username' is the email
 		const password = data.get('password');
 
+		console.log('typeof username -->', typeof username);
+		console.log('typeof password -->', typeof password);
+
 		if (typeof username !== 'string' || typeof password !== 'string' || !username || !password) {
-			return fail(400, { invalid: true });
+			return fail(400, { invalidFormat: true });
 		}
 
 		const user = await prisma.user.findUnique({
@@ -54,7 +57,7 @@ export const actions = {
 		});
 
 		if (user) {
-			return fail(400, { user: true });
+			return fail(400, { usernameTaken: true });
 		}
 
 		const newUser = await prisma.user.create({

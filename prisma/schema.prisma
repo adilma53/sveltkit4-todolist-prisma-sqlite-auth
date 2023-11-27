@@ -20,13 +20,26 @@ model Todo {
     // userId  String
 }
 
+// model UnverifiedUser {
 
+//   id            String @id @default(uuid())
+//   username      String @unique
+//   passwordHash  String
+
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+// }
 
 model User {
   id            String @id @default(uuid())
   username      String @unique
   passwordHash  String
   userAuthToken String @unique
+
+  activationToken String
+  activated Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
