@@ -14,7 +14,7 @@ const Roles = {
 };
 
 // Create a function to send a confirmation email
-const sendConfirmationEmail = async (email) => {
+const sendConfirmationEmail = async (email, verificationToken) => {
 	const transporter = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
@@ -23,11 +23,13 @@ const sendConfirmationEmail = async (email) => {
 		}
 	});
 
+	const confirmationLink = `localhost:5173/confirm/${verificationToken}`;
+
 	const mailOptions = {
 		from: 'adil2mae@gmail.com',
 		to: email,
-		subject: 'Confirmation',
-		text: 'Thank you for signing up!'
+		subject: 'Word Alchemy Account Confirmation',
+		text: `Please click the following link to confirm your email: ${confirmationLink}`
 	};
 
 	try {
@@ -60,17 +62,21 @@ export const actions = {
 			return fail(400, { usernameTaken: true });
 		}
 
+		const verificationToken = crypto.randomBytes(16).toString('hex');
+
 		const newUser = await prisma.user.create({
 			data: {
 				username,
 				passwordHash: await bcrypt.hash(password, 10),
 				userAuthToken: crypto.randomUUID(),
-				role: { connect: { name: Roles.USER } }
+				role: { connect: { name: Roles.USER } },
+
+				verificationToken
 			}
 		});
 
 		// Send a confirmation email to the user
-		await sendConfirmationEmail(username);
+		await sendConfirmationEmail(username, verificationToken);
 
 		throw redirect(303, '/');
 	}

@@ -38,8 +38,8 @@ model User {
   passwordHash  String
   userAuthToken String @unique
 
-  activationToken String
-  activated Boolean @default(false)
+  verificationToken String @unique
+  verified Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
