@@ -67,8 +67,8 @@ export const actions = {
 		const newUser = await prisma.user.create({
 			data: {
 				username,
-				passwordHash: await bcrypt.hash(password, 10),
-				userAuthToken: crypto.randomUUID(),
+				password: await bcrypt.hash(password, 10),
+				session: crypto.randomUUID(),
 				role: { connect: { name: Roles.USER } },
 
 				verificationToken
