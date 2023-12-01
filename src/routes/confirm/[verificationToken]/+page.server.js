@@ -3,42 +3,6 @@
 import { redirect } from "@sveltejs/kit";
 import { prisma } from "../../../lib/server/prisma";
 
-// const validateToken = async verificationToken => {
-//   const user = await prisma.user.findUnique({
-//     where: {
-//       verificationToken
-//     }
-//   });
-
-//   if (user && user.verificationToken === verificationToken) {
-//     const createdAt = user.verificationTokenCreatedAt;
-//     const expirationTime = 3 * 60 * 1000; // 3 minutes in milliseconds
-//     const currentTime = new Date();
-
-//     if (currentTime - createdAt > expirationTime) {
-//       // Token has expired
-//       await prisma.user.update({
-//         where: {
-//           id: user.id
-//         },
-//         data: {
-//           verificationToken: null, // or undefined or ''
-//           verificationTokenCreatedAt: null
-//         }
-//       });
-
-//       // Token is expired
-//       return false;
-//     }
-
-//     // Token is valid
-//     return true;
-//   }
-
-//   // Invalid token
-//   return false;
-// };
-
 export const load = async context => {
   const { params } = context;
   const verificationToken = params.verificationToken;

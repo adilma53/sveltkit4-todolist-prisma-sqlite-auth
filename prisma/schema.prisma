@@ -38,9 +38,7 @@ model User {
   password  String
   session String @unique
 
-  verificationToken String? @unique
-  verificationTokenCreatedAt DateTime?
-
+  verificationToken String @unique
   verified Boolean @default(false)
 
   createdAt DateTime @default(now())
