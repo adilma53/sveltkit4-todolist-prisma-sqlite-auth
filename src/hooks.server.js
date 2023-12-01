@@ -6,15 +6,20 @@ async function authenticateUser(event) {
 
 	const session = cookies.get('session');
 
+	if (!session) {
+		return null;
+	}
+
 	const user = await prisma.user.findUnique({
 		where: { session }
 	});
 
 	console.log('session -->', session);
-	console.log('user.session -->', user.session);
-	console.log('user.id -->', user.id);
+	console.log('user?.session -->', user.session);
+	console.log('user?.id -->', user.id);
+	console.log('user.roleId -->', user.roleId);
 
-	if (user && session && user.session === session) {
+	if (user && session && user?.session === session) {
 		return user;
 	}
 
@@ -22,23 +27,23 @@ async function authenticateUser(event) {
 }
 
 export async function handle({ event, resolve }) {
+	// Stage 1
 	event.locals.user = await authenticateUser(event);
 
-	console.log('event.locals.user.id  -->', event.locals.user.id);
-	console.log('event.url.pathname -->', event.url.pathname);
-
-	if (event.url.pathname.startsWith('/profile')) {
-		if (event.locals.user === null) {
+	if (event.url.pathname.startsWith('/dashboard')) {
+		if (!event.locals.user) {
 			throw redirect(303, '/');
 		}
-
-		if (event.url.pathname.startsWith('/profile/admin')) {
-			if (!event.locals.user.role !== 'ADMIN') {
-				throw redirect(300, '/');
+		if (event.url.pathname.startsWith('/dashboard/admins')) {
+			if (event.locals.user.roleId !== 1) {
+				throw redirect(303, '/dashboard');
 			}
 		}
 	}
 
-	const response = await resolve(event);
+	const response = await resolve(event); // Stage 2
+
+	// Stage 3
+
 	return response;
 }

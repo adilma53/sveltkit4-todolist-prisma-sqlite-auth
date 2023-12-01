@@ -33,6 +33,10 @@
                             <p class="error">Wrong credentials entered try again.</p>
                         {/if}
 
+                        {#if form?.verification}
+                        <p  class="error">Your account is not verified check your email please</p>
+                         {/if}
+
                         <label for="password" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
                             >Password</label
                         >

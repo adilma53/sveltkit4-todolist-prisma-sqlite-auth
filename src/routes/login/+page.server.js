@@ -26,6 +26,10 @@ export const actions = {
 			return fail(400, { credentials: true });
 		}
 
+		if (!user.verified) {
+			return fail(400, { verification: true });
+		}
+
 		const userPassword = await bcrypt.compare(password, user.password);
 
 		if (!userPassword) {
@@ -60,6 +64,6 @@ export const actions = {
 		});
 
 		// redirect the user
-		throw redirect(302, '/profile');
+		throw redirect(302, '/dashboard');
 	}
 };

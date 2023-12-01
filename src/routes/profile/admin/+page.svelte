@@ -1,1 +1,0 @@
-<div>protected admin profile</div>

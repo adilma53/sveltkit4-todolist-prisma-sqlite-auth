@@ -1,1 +1,0 @@
-<div>protected user profile</div>
