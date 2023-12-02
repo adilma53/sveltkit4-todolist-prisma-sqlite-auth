@@ -19,21 +19,21 @@
             >Your email</label>
           <input
             type="email"
-            name="username"
+            name="email"
             class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
             placeholder="name@mail.com"
             required />
 
           {#if form?.invalidFormat}
-            <p class="error">Invalid email Format</p>
+            <p class="text-red-600">Invalid email Format</p>
           {/if}
 
           {#if form?.credentials}
-            <p class="error">Wrong credentials entered try again.</p>
+            <p class="text-red-600">Wrong credentials entered try again.</p>
           {/if}
 
           {#if form?.verification}
-            <p class="error">
+            <p class="text-red-600">
               Your account is not verified check your email please
             </p>
           {/if}
@@ -53,7 +53,6 @@
             <div class="flex items-start">
               <div class="flex items-center h-5">
                 <input
-                  id="remember"
                   aria-describedby="remember"
                   type="checkbox"
                   class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
