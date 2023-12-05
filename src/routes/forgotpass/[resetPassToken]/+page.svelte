@@ -8,13 +8,9 @@
     <div
       class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <a
-        href="#"
+        href="/"
         class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-        <img
-          class="w-8 h-8 mr-2"
-          src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-          alt="logo" />
-        Flowbite
+        LOGO
       </a>
       <div
         class="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
@@ -73,7 +69,7 @@
                 class="font-light text-gray-500 dark:text-gray-300"
                 >I accept the <a
                   class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  href="#">Terms and Conditions</a
+                  href="/terms">Terms and Conditions</a
                 ></label>
             </div>
           </div>
