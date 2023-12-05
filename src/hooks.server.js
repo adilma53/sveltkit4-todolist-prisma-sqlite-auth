@@ -36,6 +36,15 @@ export async function handle({ event, resolve }) {
     }
   }
 
+  if (
+    event.url.pathname.startsWith('/login') ||
+    event.url.pathname.startsWith('/register')
+  ) {
+    if (event.locals.user) {
+      throw redirect(303, '/dashboard');
+    }
+  }
+
   const response = await resolve(event); // Stage 2
 
   // Stage 3
